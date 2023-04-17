@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>App</class>
+ <widget class="QWidget" name="App">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1313</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1313</width>
+    <height>720</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1315</width>
+    <height>720</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Vehicle Tracking</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelVideo1">
+         <property name="minimumSize">
+          <size>
+           <width>640</width>
+           <height>384</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>640</width>
+           <height>384</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: lightgray; border: 2px solid gray; border-radius: 10px; padding: 5px;
+                           font-size: 16px; font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string>Cick to select video 1</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="startVideo1">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  padding: 12px 32px;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+QPushButton:hover {
+  background-color: #66BB6A;
+}
+
+QPushButton:pressed {
+  background-color: #43A047;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Start Video 1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTrack1">
+           <property name="styleSheet">
+            <string notr="true">QCheckBox {
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: none;
+}
+
+QCheckBox::indicator {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+QCheckBox::indicator:hover {
+  border-color: #6ab5ff;
+}
+
+QCheckBox::indicator:checked {
+  border-color: #6ab5ff;
+  background-color: #6ab5ff;
+}
+
+QCheckBox::indicator:checked:hover {
+  border-color: #2f80ff;
+  background-color: #2f80ff;
+}
+
+QCheckBox::indicator:disabled {
+  border-color: #ccc;
+  background-color: #f7f7f7;
+  opacity: 0.6;
+}
+
+QCheckBox::indicator:checked:disabled {
+  border-color: #ccc;
+  background-color: #ccc;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Track Video 1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Preferred</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxCount1">
+           <property name="styleSheet">
+            <string notr="true">QCheckBox {
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: none;
+}
+
+QCheckBox::indicator {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+QCheckBox::indicator:hover {
+  border-color: #6ab5ff;
+}
+
+QCheckBox::indicator:checked {
+  border-color: #6ab5ff;
+  background-color: #6ab5ff;
+}
+
+QCheckBox::indicator:checked:hover {
+  border-color: #2f80ff;
+  background-color: #2f80ff;
+}
+
+QCheckBox::indicator:disabled {
+  border-color: #ccc;
+  background-color: #f7f7f7;
+  opacity: 0.6;
+}
+
+QCheckBox::indicator:checked:disabled {
+  border-color: #ccc;
+  background-color: #ccc;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Count Video 1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelVideo2">
+         <property name="minimumSize">
+          <size>
+           <width>640</width>
+           <height>384</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>640</width>
+           <height>384</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: lightgray; border: 2px solid gray; border-radius: 10px; padding: 5px;font-size: 16px; font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string>Click to select video 2</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="startVideo2">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  padding: 12px 32px;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+QPushButton:hover {
+  background-color: #66BB6A;
+}
+
+QPushButton:pressed {
+  background-color: #43A047;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Start Video 2</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTrack2">
+           <property name="styleSheet">
+            <string notr="true">QCheckBox {
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: none;
+}
+
+QCheckBox::indicator {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+QCheckBox::indicator:hover {
+  border-color: #6ab5ff;
+}
+
+QCheckBox::indicator:checked {
+  border-color: #6ab5ff;
+  background-color: #6ab5ff;
+}
+
+QCheckBox::indicator:checked:hover {
+  border-color: #2f80ff;
+  background-color: #2f80ff;
+}
+
+QCheckBox::indicator:disabled {
+  border-color: #ccc;
+  background-color: #f7f7f7;
+  opacity: 0.6;
+}
+
+QCheckBox::indicator:checked:disabled {
+  border-color: #ccc;
+  background-color: #ccc;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Track Video 2</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxCount2">
+           <property name="styleSheet">
+            <string notr="true">QCheckBox {
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: none;
+}
+
+QCheckBox::indicator {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+QCheckBox::indicator:hover {
+  border-color: #6ab5ff;
+}
+
+QCheckBox::indicator:checked {
+  border-color: #6ab5ff;
+  background-color: #6ab5ff;
+}
+
+QCheckBox::indicator:checked:hover {
+  border-color: #2f80ff;
+  background-color: #2f80ff;
+}
+
+QCheckBox::indicator:disabled {
+  border-color: #ccc;
+  background-color: #f7f7f7;
+  opacity: 0.6;
+}
+
+QCheckBox::indicator:checked:disabled {
+  border-color: #ccc;
+  background-color: #ccc;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Count Video 2</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
