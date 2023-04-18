@@ -8,64 +8,61 @@ import time
 from PySide2.QtCore import QThread, Signal
 from trackers.multi_tracker import create_tracker
 
-limits = [150, 800, 1800, 800]
-
+limits = [80, 250, 550, 250]
+model = yolov5.load('yolov5n.onnx', device='cpu')
+model.classes = [2, 3, 5, 7]
+tracker = create_tracker('botsort')
 class VideoStream(QThread):
     signal = Signal(np.ndarray)
 
-    def __init__(self, index, video_path=None):
+    def __init__(self, index):
         super(VideoStream, self).__init__()
         self.index = index
         print("start threading", self.index)
-        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-        self.model = yolov5.load('yolov5s.onnx', device=self.device)
-        self.model.classes = [2, 3, 5, 7]
-        self.video_path = video_path
+        self.video_path = None
         self.isTracking = False
         self.isCount = False
         self.data_deque = {}
-        self.tracker = create_tracker('ocsort')
         self.mask = None
         self.count = 0
         self.totalCount = []
+        self.cap = None
 
     def run(self):
-        cap = cv2.VideoCapture(self.video_path)
         scaler = 1
         while True:
             start_time = time.time()
-            ret, frame = cap.read()
+            ret, frame = self.cap.read()
             if ret:
                 frameRegion = cv2.bitwise_and(frame, self.mask)
-                results = self.model(frameRegion)
-                bbox = results.xyxy[0]
+                results = model(frameRegion)
+                if self.isTracking or self.isCount:
+                    resultsTracker = tracker.update(results.pred[0].cpu(), frame)
+                
                 if self.isTracking:
-                    results = self.tracker.update(results.pred[0].cpu(), frameRegion)
-                    if results.shape[0] > 0:
-                        frame = self.draw_boxes(frame, results[:, 0:4], self.model.names, results[:, 5], results[:, 4])
+                    if resultsTracker.shape[0] > 0:
+                        frame = self.draw_boxes(frame, resultsTracker[:, 0:4], model.names, resultsTracker[:, 5], resultsTracker[:, 4])
                 else:
-                    results = results.xyxy[0]
-                    frame = self.draw_boxes(frame, results[:, 0:4], self.model.names, results[:, 5])
 
+                    frame = self.draw_boxes(frame, results.xyxy[0][:, 0:4], model.names, results.xyxy[0][:, 5])
                 
                 if self.isCount:
-                    frame = cv2.rectangle(frame, (limits[0], limits[1]), (limits[2], limits[3]), (0, 255, 0), 5 * scaler)
-                    results = self.tracker.update(bbox.cpu(), frameRegion)
+                    frame = cv2.rectangle(frame, (limits[0], limits[1]), (limits[2], limits[3]), (0, 255, 0), 3 * scaler)
 
-                    self.count = self.counting(frame, results)
+                    self.count = self.counting(frame, resultsTracker)
                     frame = cv2.putText(frame, 'Vehicle Count : ' + str(self.count), (25 * scaler, 100 * scaler), cv2.FONT_HERSHEY_SIMPLEX,
-                                        1.25 * scaler, (255, 0, 255), 2 * scaler)
-            else:
-                exit(0)
+                                        1 * scaler, (255, 0, 255), 1 * scaler)
 
-            end_time = time.time()
-            FPS = 1 / (end_time - start_time)
-            frame = cv2.putText(frame, 'FPS : ' + str(int(FPS)), (25 * scaler, 50 * scaler),
-                      cv2.FONT_HERSHEY_SIMPLEX, 1.25 * scaler, (255, 0, 255), 2 * scaler)
-            
-            self.signal.emit(frame)
-            
-        cap.release()
+                end_time = time.time()
+                FPS = 1 / (end_time - start_time)
+                frame = cv2.putText(frame, 'FPS : ' + str(int(FPS)), (25 * scaler, 50 * scaler),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1 * scaler, (255, 0, 255), 1 * scaler)
+                
+                self.signal.emit(frame)
+            else:
+                self.cap.release()
+                exit()
+        self.cap.release()
 
     def draw_border(self, img, pt1, pt2, color, thickness, r, d):
         x1,y1 = pt1
@@ -165,16 +162,15 @@ class VideoStream(QThread):
                     thickness = int(np.sqrt(64 / float(i + i)) * 1.5)
                     # draw trails
                     cv2.line(img, self.data_deque[id][i - 1], self.data_deque[id][i], color, thickness)
-            self.UI_box(box, img, label=label, color=color, line_thickness=5)
+            self.UI_box(box, img, label=label, color=color, line_thickness=2)
         return img
 
     def counting(self, frame, results):
         for i, res in enumerate(results):
-            x1, y1, x2, y2, id, _ = [int(i) for i in res]
+            x1, y1, x2, y2, id = res[0], res[1], res[2], res[3], res[4]
             center = (int((x2+x1)/ 2), int((y2+y1)/2))
             if limits[0] < center[0] < limits[2] and limits[1] - 40 < center[1] < limits[3] + 40:
                 if self.totalCount.count(id) == 0:
                     self.totalCount.append(id)
                     self.count += 1
         return self.count
-

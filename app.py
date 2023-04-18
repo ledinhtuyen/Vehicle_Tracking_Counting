@@ -5,7 +5,7 @@ from PySide2.QtGui import QImage, QPixmap
 from PySide2.QtCore import Qt
 
 from GUI.Ui_App import Ui_App
-from Utils import VideoStream
+from Utils import *
 
 class App(QWidget):
     def __init__(self):
@@ -34,10 +34,9 @@ class App(QWidget):
     def convert_cv_qt(self, id, cv_img):
         cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
         height, width, channel = cv_img.shape
-        bytesPerLine = 3 * width
+        bytesPerLine = channel * width
         convertToQtFormat = QImage(cv_img.data, width, height, bytesPerLine, QImage.Format_RGB888)
-        p = convertToQtFormat.scaled(self.ui_app.__getattribute__(f"labelVideo{id}").width(), self.ui_app.__getattribute__(f"labelVideo{id}").height() , Qt.KeepAspectRatio)
-        return QPixmap.fromImage(p)
+        return QPixmap.fromImage(convertToQtFormat)
     def turn_tracking(self, id):
         try:
             self.video_stream[id].isTracking = self.ui_app.__getattribute__(f"checkBoxTrack{id}").isChecked()
@@ -55,12 +54,8 @@ class App(QWidget):
                 self.video_stream[id] = VideoStream(id)
                 self.video_stream[id].signal.connect(lambda cv_img: self.render(id, cv_img))
                 self.video_stream[id].video_path = file_path
-                cap = cv2.VideoCapture(self.video_stream[id].video_path)
-                video_width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-                video_height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-                cap.release()
-                self.video_stream[id].isTracking = False
-                self.video_stream[id].mask = cv2.resize(cv2.imread("mask.png"), (int(video_width), int(video_height)))
+                self.video_stream[id].cap = cv2.VideoCapture(self.video_stream[id].video_path)
+                self.video_stream[id].mask = cv2.imread("mask.png")
                 self.show_thumbnail(id)
             else:
                 QMessageBox.warning(self, "Warning", "Please select a video file")
@@ -68,10 +63,9 @@ class App(QWidget):
         cap = cv2.VideoCapture(self.video_stream[id].video_path)
         ret, frame = cap.read()
         if ret:
-            frame = cv2.resize(frame, (self.ui_app.__getattribute__(f"labelVideo{id}").width(), self.ui_app.__getattribute__(f"labelVideo{id}").height()))
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             height, width, channel = frame.shape
-            bytes_per_line = 3 * width
+            bytes_per_line = channel * width
             q_image = QImage(frame.data, width, height, bytes_per_line, QImage.Format_RGB888)
             q_pixmap = QPixmap.fromImage(q_image)
             self.ui_app.__getattribute__(f"labelVideo{id}").setPixmap(q_pixmap)
